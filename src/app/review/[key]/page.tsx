@@ -7,6 +7,7 @@ import { categories } from "@/content/services";
 import { isValidKey } from "@/lib/review-keys";
 import { ReviewForm } from "@/components/review-form";
 import { ShieldIcon, StarIcon } from "@/components/icons";
+import { HeroPower } from "@/components/hero-power";
 import logoMark from "../../../../public/brand/logo-mark.png";
 
 /** Private page: only reachable with the secret link, never indexed. */
@@ -19,6 +20,7 @@ export default function ReviewPage({ params }: PageProps<"/review/[key]">) {
   return (
     <section className="relative isolate min-h-[80vh] overflow-hidden bg-ink pt-14 pb-24 md:pt-20">
       <div className="circuit absolute inset-0 -z-10" />
+      <HeroPower />
       <div className="absolute -top-40 -right-40 -z-10 size-[34rem] rounded-full bg-brand/30 blur-3xl" aria-hidden="true" />
       <div className="wrap max-w-2xl">
         <div className="text-center text-white">

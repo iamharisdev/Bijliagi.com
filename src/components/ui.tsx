@@ -4,6 +4,7 @@ import { siteConfig } from "@/content/site";
 import type { Faq, ServiceItem } from "@/content/services";
 import { cn, formatPKR, whatsappUrl } from "@/lib/utils";
 import { ArrowRightIcon, BoltIcon, CheckIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
+import { HeroPower } from "@/components/hero-power";
 
 export function JsonLd({ data }: { data: object }) {
   return (
@@ -254,6 +255,7 @@ export function PageHero({
       )}
       <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/90 to-ink/40" />
       <div className="circuit absolute inset-0 -z-10" />
+      <HeroPower />
       <div className="wrap pt-10 pb-16 md:pt-14 md:pb-20">
         <Breadcrumbs items={crumbs} tone="light" />
         <div className="mt-8 max-w-3xl">
