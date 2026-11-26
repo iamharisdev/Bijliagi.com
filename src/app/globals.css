@@ -1,0 +1,226 @@
+@import "tailwindcss";
+
+/*
+ * Bijliagi brand tokens, taken from the logo:
+ * electric blue bolt, deep navy wordmark, steel-grey gear ring, yellow plug spark.
+ */
+@theme {
+  --color-paper: #f4f7fb;
+  --color-mist: #e8eef7;
+  --color-ink: #0a1a33;
+  --color-ink-soft: #132a4d;
+  --color-steel: #56677d;
+  --color-line: #d9e2ee;
+
+  --color-brand: #1667d9;
+  --color-brand-bright: #2f86ff;
+  --color-brand-deep: #0b4192;
+  --color-brand-soft: #e6f0ff;
+
+  --color-spark: #ffc72c;
+  --color-spark-soft: #fff6d6;
+  --color-wa: #1fa855;
+  --color-live: #d0342c;
+
+  --font-sans: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
+
+  --shadow-card: 0 1px 2px rgb(10 26 51 / 0.06), 0 8px 24px -12px rgb(10 26 51 / 0.18);
+  --shadow-lift: 0 2px 4px rgb(10 26 51 / 0.06), 0 24px 48px -20px rgb(11 65 146 / 0.38);
+}
+
+@utility condensed {
+  font-stretch: 75%;
+}
+
+@utility wrap {
+  width: 100%;
+  max-width: 78rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+  @media (width >= 48rem) {
+    padding-inline: 2rem;
+  }
+}
+
+/* Brand gradient used on primary surfaces and the bolt mark. */
+@utility bg-brand-gradient {
+  background-image: linear-gradient(120deg, var(--color-brand-deep) 0%, var(--color-brand) 55%, var(--color-brand-bright) 100%);
+}
+
+@utility text-gradient {
+  background-image: linear-gradient(100deg, #7db4ff 0%, #ffffff 45%, var(--color-spark) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* Circuit-board line pattern from the logo background. */
+@utility circuit {
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' fill='none' stroke='%23ffffff' stroke-opacity='.07' stroke-width='1.5'%3E%3Cpath d='M0 40h50l20 20h40l20-20h30M0 120h30l20-20h60l20 20h30M80 0v30l-20 20v60l20 20v30'/%3E%3Ccircle cx='50' cy='40' r='3'/%3E%3Ccircle cx='130' cy='40' r='3'/%3E%3Ccircle cx='30' cy='120' r='3'/%3E%3Ccircle cx='130' cy='120' r='3'/%3E%3Ccircle cx='80' cy='30' r='3'/%3E%3C/svg%3E");
+}
+
+/* Same circuit pattern, lit up: shown only around the cursor in the hero ("power" effect). */
+@utility circuit-lit {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' fill='none' stroke='%23ffffff' stroke-opacity='.95' stroke-width='1.6'%3E%3Cpath d='M0 40h50l20 20h40l20-20h30M0 120h30l20-20h60l20 20h30M80 0v30l-20 20v60l20 20v30'/%3E%3Ccircle cx='50' cy='40' r='3' fill='%23ffffff'/%3E%3Ccircle cx='130' cy='40' r='3' fill='%23ffffff'/%3E%3Ccircle cx='30' cy='120' r='3' fill='%23ffffff'/%3E%3Ccircle cx='130' cy='120' r='3' fill='%23ffffff'/%3E%3Ccircle cx='80' cy='30' r='3' fill='%23ffffff'/%3E%3C/svg%3E");
+  filter: drop-shadow(0 0 3px rgb(125 180 255 / 0.95)) drop-shadow(0 0 8px rgb(47 134 255 / 0.7));
+}
+
+@utility circuit-dark {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160' fill='none' stroke='%231667d9' stroke-opacity='.08' stroke-width='1.5'%3E%3Cpath d='M0 40h50l20 20h40l20-20h30M0 120h30l20-20h60l20 20h30M80 0v30l-20 20v60l20 20v30'/%3E%3Ccircle cx='50' cy='40' r='3'/%3E%3Ccircle cx='130' cy='40' r='3'/%3E%3Ccircle cx='30' cy='120' r='3'/%3E%3Ccircle cx='130' cy='120' r='3'/%3E%3Ccircle cx='80' cy='30' r='3'/%3E%3C/svg%3E");
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    line-height: 1.55;
+    text-rendering: optimizeLegibility;
+  }
+  h1,
+  h2,
+  h3 {
+    font-stretch: 75%;
+    font-weight: 800;
+    line-height: 1.04;
+    letter-spacing: -0.012em;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  ::selection {
+    background: var(--color-brand);
+    color: #fff;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-brand-bright);
+    outline-offset: 2px;
+  }
+  [id] {
+    scroll-margin-top: 7rem;
+  }
+}
+
+/* Lock page scroll while a dialog (search, quote list, video) is open */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+/* ---------- Motion ---------- */
+
+@keyframes ticker {
+  to {
+    transform: translateX(-50%);
+  }
+}
+.ticker-track {
+  animation: ticker 45s linear infinite;
+}
+
+@keyframes word-in {
+  from {
+    opacity: 0;
+    transform: translateY(0.4em);
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+.word-in {
+  animation: word-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+@keyframes pulse-ring {
+  0% {
+    box-shadow: 0 0 0 0 rgb(47 134 255 / 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 18px rgb(47 134 255 / 0);
+  }
+}
+.pulse-ring {
+  animation: pulse-ring 1.8s ease-out infinite;
+}
+
+@keyframes live-dot {
+  50% {
+    opacity: 0.35;
+  }
+}
+.live-dot {
+  animation: live-dot 1.6s ease-in-out infinite;
+}
+
+@keyframes drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+.drawer-in {
+  animation: drawer-in 0.32s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes pop-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px) scale(0.98);
+  }
+}
+.pop-in {
+  animation: pop-in 0.28s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+@keyframes badge-bump {
+  40% {
+    transform: scale(1.35);
+  }
+}
+.badge-bump {
+  animation: badge-bump 0.35s ease-out;
+}
+
+/* Scroll reveal: only hides content once JS has confirmed it can reveal it again. */
+html.reveal-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.7, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--reveal-i, 0) * 80ms);
+}
+html.reveal-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .ticker-track,
+  .word-in,
+  .pulse-ring,
+  .live-dot,
+  .drawer-in,
+  .badge-bump,
+  .pop-in {
+    animation: none;
+  }
+  html.reveal-ready [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .ticker-toggle {
+    display: none;
+  }
+}
