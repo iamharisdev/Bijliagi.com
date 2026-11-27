@@ -7,7 +7,7 @@ export const siteConfig = {
   shortName: "Bijliagi",
   tagline: "Professional electrical services",
   description:
-    "Electricians in Lahore for house and building wiring, fault finding, DBs and breakers, lighting, AC installation, generator and UPS, solar and CCTV. Clear rates and written contracts.",
+    "Electricians in Lahore for house and building wiring, fault finding, DBs and breakers, lighting, AC installation, generator and UPS, solar and CCTV. Written contracts and a work guarantee.",
 
   /** Production URL. Set NEXT_PUBLIC_SITE_URL in your hosting env. */
   url: process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bijliagi.com",
@@ -31,6 +31,12 @@ export const siteConfig = {
     /** schema.org format for Google */
     schema: ["Mo-Sa 09:00-20:00"],
   },
+
+  /**
+   * Show service prices on the website? Prices stay saved in src/content/services.ts either way.
+   * false = no prices anywhere; every service has a "Contact us" button that opens WhatsApp.
+   */
+  showPrices: false as boolean,
 
   /** Areas you currently cover. Shown on the site and sent to Google. */
   serviceAreas: [

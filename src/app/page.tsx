@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/content/site";
-import { categories, electricalCategories, featuredItems, plumbingCategories } from "@/content/services";
+import { categories, electricalCategories, featuredItems, forBrowser, plumbingCategories } from "@/content/services";
 import {
   closing,
   commitments,
@@ -45,7 +45,7 @@ const quickQuote: QuickQuoteCategory[] = categories.map((c) => ({
   icon: c.icon,
   href: `/services/${c.slug}`,
   count: c.items.length,
-  items: c.items.slice(0, 3).map((i) => ({ key: `${c.slug}/${i.slug}`, name: i.name, price: i.price, unit: i.unit, from: i.from })),
+  items: c.items.slice(0, 3).map((i) => ({ key: `${c.slug}/${i.slug}`, name: i.name, summary: i.summary, ...(siteConfig.showPrices ? { price: i.price, unit: i.unit, from: i.from } : { price: 0, unit: "" }) })),
 }));
 
 const filterCategories = categories.map(({ slug, short, icon }) => ({ slug, short, icon }));
@@ -92,7 +92,7 @@ export default function HomePage() {
                 Get a free quote
               </a>
               <ButtonLink href="/services" variant="light" arrow className="px-7 py-4">
-                Services &amp; rates
+                Our services
               </ButtonLink>
             </div>
 
@@ -114,7 +114,7 @@ export default function HomePage() {
             </ul>
           </div>
 
-          <HeroQuickQuote categories={quickQuote} />
+          <HeroQuickQuote categories={quickQuote} showPrices={siteConfig.showPrices} />
         </div>
       </section>
 
@@ -144,7 +144,7 @@ export default function HomePage() {
             title="Complete electrical work for homes and buildings"
             intro="Everything inside your premises, from the meter onwards, done by trained electricians."
           />
-          <TextLink href="/services">Full rate list</TextLink>
+          <TextLink href="/services">All services</TextLink>
         </div>
 
         <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
@@ -181,7 +181,13 @@ export default function HomePage() {
                     <p className="mt-2 line-clamp-3 text-sm text-steel">{c.summary}</p>
                     <div className="mt-auto flex items-center justify-between pt-5">
                       <p className="text-sm text-steel">
-                        from <span className="font-bold text-ink tabular-nums">{formatPKR(from)}</span>
+                        {siteConfig.showPrices ? (
+                          <>
+                            from <span className="font-bold text-ink tabular-nums">{formatPKR(from)}</span>
+                          </>
+                        ) : (
+                          <span className="font-semibold text-brand">View services</span>
+                        )}
                       </p>
                       <span className="flex size-9 items-center justify-center rounded-full bg-brand-soft text-brand transition-all group-hover:bg-brand group-hover:text-white">
                         <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-0.5" />
@@ -226,7 +232,7 @@ export default function HomePage() {
                 ))}
               </ul>
               <TextLink href={`/services/${c.slug}`} className="mt-6">
-                Plumbing rates
+                Plumbing services
               </TextLink>
             </div>
           </div>
@@ -264,13 +270,13 @@ export default function HomePage() {
             <SectionHeading
               id="popular-title"
               eyebrow="Most booked"
-              title="Popular services, clear rates"
-              intro="Add services to your quote list and send them to us in one WhatsApp message."
+              title="Popular services"
+              intro="Tap Contact us on any service and talk to us directly on WhatsApp."
             />
-            <TextLink href="/services">Full rate list</TextLink>
+            <TextLink href="/services">All services</TextLink>
           </div>
           <div className="mt-10">
-            <FilterableGrid items={featuredItems} categories={filterCategories} />
+            <FilterableGrid items={forBrowser(featuredItems)} categories={filterCategories} />
           </div>
           <p className="mt-12 flex max-w-3xl gap-3 rounded-2xl border border-spark/50 bg-spark-soft px-5 py-4 text-ink/90">
             <ShieldIcon className="mt-0.5 size-5 shrink-0 text-brand-deep" />
@@ -415,7 +421,7 @@ export default function HomePage() {
             </div>
             <div className="flex flex-wrap gap-3">
               <ButtonLink href="/services" variant="spark" arrow>
-                Start your quote list
+                See our services
               </ButtonLink>
               <a href={`tel:${siteConfig.phoneE164}`} className={buttonClass("light")}>
                 Call {siteConfig.phoneDisplay}

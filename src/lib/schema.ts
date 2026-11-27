@@ -16,7 +16,7 @@ export function businessSchema(categories: Category[]) {
     email: siteConfig.email,
     image: absoluteUrl("/images/about.jpg"),
     logo: absoluteUrl("/brand/logo.png"),
-    priceRange: "Rs",
+    ...(siteConfig.showPrices ? { priceRange: "Rs" } : {}),
     address: {
       "@type": "PostalAddress",
       ...(siteConfig.streetAddress ? { streetAddress: siteConfig.streetAddress } : {}),
@@ -67,7 +67,7 @@ export function categorySchema(category: Category, items: ItemWithCategory[]) {
     image: absoluteUrl(category.image),
     provider: { "@id": businessId },
     areaServed: { "@type": "City", name: siteConfig.city },
-    offers: items.map(offer),
+    ...(siteConfig.showPrices ? { offers: items.map(offer) } : {}),
   };
 }
 
@@ -82,7 +82,7 @@ export function itemSchema(item: ItemWithCategory) {
     ...(item.image ? { image: absoluteUrl(item.image) } : {}),
     provider: { "@id": businessId },
     areaServed: { "@type": "City", name: siteConfig.city },
-    offers: offer(item),
+    ...(siteConfig.showPrices ? { offers: offer(item) } : {}),
   };
 }
 

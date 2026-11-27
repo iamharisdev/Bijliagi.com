@@ -7,7 +7,7 @@ import { FaqList, JsonLd, PageHero } from "@/components/ui";
 
 export const metadata: Metadata = {
   title: "Frequently asked questions",
-  description: `Answers about rates, contracts, materials and service areas at ${siteConfig.name}.`,
+  description: `Answers about pricing, contracts, materials and service areas at ${siteConfig.name}.`,
   alternates: { canonical: "/faq" },
   openGraph: { url: "/faq" },
 };
@@ -21,7 +21,7 @@ export default function FaqPage() {
   const all = [...generalFaqs, ...categories.flatMap((c) => c.faqs)];
   return (
     <>
-    <PageHero crumbs={crumbs} eyebrow="Help" title="Frequently asked questions" intro="Rates, materials, contracts and service areas. Still unsure? Message us on WhatsApp." />
+    <PageHero crumbs={crumbs} eyebrow="Help" title="Frequently asked questions" intro="Pricing, materials, contracts and service areas. Still unsure? Message us on WhatsApp." />
     <div className="wrap max-w-3xl pt-4 pb-24">
       <section aria-labelledby="general" className="mt-12">
         <h2 id="general" className="text-3xl">General</h2>

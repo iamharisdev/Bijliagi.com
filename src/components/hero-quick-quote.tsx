@@ -3,9 +3,8 @@
 import Link from "next/link";
 import { useState } from "react";
 import type { CategoryIcon } from "@/content/services";
-import { cn, formatPKR } from "@/lib/utils";
-import { useQuote } from "@/components/quote-provider";
-import { ArrowRightIcon, CategoryGlyph, CheckIcon } from "@/components/icons";
+import { cn, formatPKR, serviceWhatsappUrl } from "@/lib/utils";
+import { ArrowRightIcon, CategoryGlyph, WhatsAppIcon } from "@/components/icons";
 
 export type QuickQuoteCategory = {
   slug: string;
@@ -13,12 +12,12 @@ export type QuickQuoteCategory = {
   icon: CategoryIcon;
   href: string;
   count: number;
-  items: Array<{ key: string; name: string; price: number; unit: string; from?: boolean }>;
+  items: Array<{ key: string; name: string; summary: string; price: number; unit: string; from?: boolean }>;
 };
 
-export function HeroQuickQuote({ categories }: { categories: QuickQuoteCategory[] }) {
+/** Hero card: pick a service type, see the main services, contact us on WhatsApp about any of them. */
+export function HeroQuickQuote({ categories, showPrices }: { categories: QuickQuoteCategory[]; showPrices: boolean }) {
   const [active, setActive] = useState(categories[0].slug);
-  const { has, add, count, open } = useQuote();
   const current = categories.find((c) => c.slug === active) ?? categories[0];
 
   return (
@@ -26,12 +25,12 @@ export function HeroQuickQuote({ categories }: { categories: QuickQuoteCategory[
       <div className="rounded-[1.25rem] bg-white p-5 text-ink sm:p-6">
         <div className="flex items-center justify-between gap-3">
           <div>
-            <p className="text-xs font-bold tracking-[0.14em] text-brand uppercase">Quick rates</p>
+            <p className="text-xs font-bold tracking-[0.14em] text-brand uppercase">Our services</p>
             <h2 className="mt-1 text-2xl">What do you need done?</h2>
           </div>
           <span className="flex items-center gap-1.5 rounded-full bg-wa/10 px-3 py-1 text-xs font-semibold text-wa">
             <span className="live-dot size-2 rounded-full bg-wa" />
-            Booking open
+            Online now
           </span>
         </div>
 
@@ -61,44 +60,40 @@ export function HeroQuickQuote({ categories }: { categories: QuickQuoteCategory[
         </div>
 
         <ul id="quick-quote-panel" role="tabpanel" aria-label={current.short} className="mt-4 divide-y divide-line">
-          {current.items.map((item, i) => {
-            const added = has(item.key);
-            return (
-              <li key={item.key} className="word-in flex items-center gap-3 py-3" style={{ animationDelay: `${i * 60}ms` }}>
-                <div className="min-w-0 flex-1">
-                  <p className="truncate font-semibold">{item.name}</p>
-                  <p className="text-sm text-steel tabular-nums">
-                    {item.from && "from "}
-                    <span className="font-bold text-brand-deep">{formatPKR(item.price)}</span> {item.unit}
-                  </p>
-                </div>
-                <button
-                  type="button"
-                  onClick={() => add(item.key)}
-                  aria-label={added ? `${item.name} is in your quote list, add one more` : `Add ${item.name} to quote list`}
-                  className={cn(
-                    "flex h-9 shrink-0 items-center gap-1 rounded-lg px-3 text-sm font-semibold transition-colors",
-                    added ? "bg-brand-soft text-brand" : "bg-ink text-white hover:bg-brand",
+          {current.items.map((item, i) => (
+            <li key={item.key} className="word-in flex items-center gap-3 py-3" style={{ animationDelay: `${i * 60}ms` }}>
+              <div className="min-w-0 flex-1">
+                <p className="truncate font-semibold">{item.name}</p>
+                <p className="truncate text-sm text-steel tabular-nums">
+                  {showPrices ? (
+                    <>
+                      {item.from && "from "}
+                      <span className="font-bold text-brand-deep">{formatPKR(item.price)}</span> {item.unit}
+                    </>
+                  ) : (
+                    item.summary
                   )}
-                >
-                  {added ? <CheckIcon className="size-4" /> : <span aria-hidden="true">+</span>}
-                  {added ? "Added" : "Add"}
-                </button>
-              </li>
-            );
-          })}
+                </p>
+              </div>
+              <a
+                href={serviceWhatsappUrl(item.name)}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`Contact us about ${item.name} on WhatsApp`}
+                className="flex h-9 shrink-0 items-center gap-1.5 rounded-lg bg-wa px-3 text-sm font-semibold text-white transition-colors hover:bg-[#178f47]"
+              >
+                <WhatsAppIcon className="size-4" />
+                Contact
+              </a>
+            </li>
+          ))}
         </ul>
 
-        <div className="mt-3 flex items-center justify-between gap-3 border-t border-line pt-4">
+        <div className="mt-3 border-t border-line pt-4">
           <Link href={current.href} className="group inline-flex items-center gap-1.5 text-sm font-semibold text-brand">
             All {current.count} {current.short.toLowerCase()} services
             <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
           </Link>
-          {count > 0 && (
-            <button type="button" onClick={open} className="text-sm font-semibold text-ink underline decoration-brand decoration-2 underline-offset-4">
-              View list ({count})
-            </button>
-          )}
         </div>
       </div>
     </div>

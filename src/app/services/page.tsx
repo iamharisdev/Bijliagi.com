@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { siteConfig } from "@/content/site";
-import { allItems, electricalCategories, plumbingCategories } from "@/content/services";
+import { allItems, electricalCategories, forBrowser, plumbingCategories } from "@/content/services";
 import { scopeNote } from "@/content/general";
 import { breadcrumbSchema } from "@/lib/schema";
 import { Eyebrow, JsonLd, PageHero } from "@/components/ui";
@@ -10,8 +10,8 @@ import { FilterableGrid } from "@/components/filterable-grid";
 import { CategoryGlyph, ShieldIcon } from "@/components/icons";
 
 export const metadata: Metadata = {
-  title: "All services & rates",
-  description: `Electrician rates in ${siteConfig.city}: house wiring, fault finding, lighting, AC, generator and UPS, solar and CCTV. Add services to a quote list and send it on WhatsApp.`,
+  title: "Our services",
+  description: `Electrical services in ${siteConfig.city}: house wiring, fault finding, lighting, AC, generator and UPS, solar and CCTV. Contact us on WhatsApp.`,
   alternates: { canonical: "/services" },
   openGraph: { url: "/services" },
 };
@@ -28,9 +28,9 @@ export default function ServicesPage() {
     <>
       <PageHero
         crumbs={crumbs}
-        eyebrow="Rate list"
-        title="All services & rates"
-        intro={`${electricalItems.length} electrical services${plumbingCategories.length > 0 ? ", plus a separate plumbing service" : ""}. Standard labour rates for ${siteConfig.city}; the final quote is confirmed after we check the site.`}
+        eyebrow="Services"
+        title="Our services"
+        intro={`${electricalItems.length} electrical services${plumbingCategories.length > 0 ? ", plus a separate plumbing service" : ""}. Tap Contact us on any service to talk to us on WhatsApp.`}
         image="/images/categories/house-building-wiring.jpg"
       >
         <ul className="mt-8 flex flex-wrap gap-2">
@@ -51,8 +51,8 @@ export default function ServicesPage() {
       <div className="py-14 md:py-20">
         <div className="wrap">
           <Eyebrow>Electrical services</Eyebrow>
-          <h2 className="mt-3 mb-8 text-4xl md:text-5xl">Electrician rates</h2>
-          <FilterableGrid items={electricalItems} categories={electricalCategories.map(({ slug, short, icon }) => ({ slug, short, icon }))} />
+          <h2 className="mt-3 mb-8 text-4xl md:text-5xl">What we do</h2>
+          <FilterableGrid items={forBrowser(electricalItems)} categories={electricalCategories.map(({ slug, short, icon }) => ({ slug, short, icon }))} />
 
           {plumbingCategories.map((c) => {
             const items = allItems.filter((i) => i.categorySlug === c.slug);

@@ -103,7 +103,7 @@ export function VideoShowcase({ videos }: { videos: readonly VideoEntry[] }) {
           href={current.href}
           className="group mt-auto inline-flex items-center gap-1.5 pt-2 font-semibold text-white hover:text-spark"
         >
-          See {current.category.toLowerCase()} services and rates
+          See {current.category.toLowerCase()} services
           <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>

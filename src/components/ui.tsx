@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ReactNode } from "react";
 import { siteConfig } from "@/content/site";
 import type { Faq, ServiceItem } from "@/content/services";
-import { cn, formatPKR, whatsappUrl } from "@/lib/utils";
+import { cn, formatPKR, serviceWhatsappUrl, whatsappUrl } from "@/lib/utils";
 import { ArrowRightIcon, BoltIcon, CheckIcon, PhoneIcon, WhatsAppIcon } from "@/components/icons";
 import { HeroPower } from "@/components/hero-power";
 
@@ -179,6 +179,36 @@ export function TextLink({ href, children, className }: { href: string; children
       {children}
       <ArrowRightIcon className="size-4 transition-transform group-hover:translate-x-1" />
     </Link>
+  );
+}
+
+/** "Contact us" button on a service: opens WhatsApp with the service name in the message. */
+export function ContactServiceButton({
+  service,
+  size = "md",
+  label = "Contact us",
+  className,
+}: {
+  service: string;
+  size?: "md" | "lg";
+  label?: string;
+  className?: string;
+}) {
+  return (
+    <a
+      href={serviceWhatsappUrl(service)}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`${label} about ${service} on WhatsApp`}
+      className={cn(
+        "inline-flex items-center justify-center gap-2 rounded-xl bg-wa font-semibold text-white transition-all duration-200 hover:bg-[#178f47] active:scale-[0.97]",
+        size === "lg" ? "h-13 px-7 text-base shadow-[0_10px_24px_-10px_rgb(31_168_85/0.7)]" : "h-11 px-4 text-sm",
+        className,
+      )}
+    >
+      <WhatsAppIcon className={size === "lg" ? "size-5" : "size-4"} />
+      {label}
+    </a>
   );
 }
 

@@ -9,6 +9,11 @@ export function whatsappUrl(message?: string): string {
   return message ? `${base}?text=${encodeURIComponent(message)}` : base;
 }
 
+/** WhatsApp link with a ready message asking about one service. */
+export function serviceWhatsappUrl(serviceName: string): string {
+  return whatsappUrl(`Assalam o Alaikum ${siteConfig.name}, mujhe "${serviceName}" ke baare mein maloomat chahiye.`);
+}
+
 export function absoluteUrl(path = "/"): string {
   return new URL(path, siteConfig.url).toString();
 }

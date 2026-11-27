@@ -1,8 +1,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import type { ItemWithCategory } from "@/content/services";
+import { siteConfig } from "@/content/site";
 import { formatPKR } from "@/lib/utils";
-import { AddToQuoteButton } from "@/components/add-to-quote";
+import { ContactServiceButton } from "@/components/ui";
 import { ArrowRightIcon, CategoryGlyph } from "@/components/icons";
 
 export type ItemCardData = Pick<
@@ -50,13 +51,15 @@ export function ItemCard({ item, showCategory = true }: { item: ItemCardData; sh
           </Link>
         </h3>
         <p className="mt-1.5 line-clamp-2 text-sm text-steel">{item.summary}</p>
-        <p className="mt-3 tabular-nums">
-          {item.from && <span className="text-sm text-steel">from </span>}
-          <span className="text-xl font-extrabold text-brand-deep">{formatPKR(item.price)}</span>
-          <span className="text-sm text-steel"> {item.unit}</span>
-        </p>
+        {siteConfig.showPrices && (
+          <p className="mt-3 tabular-nums">
+            {item.from && <span className="text-sm text-steel">from </span>}
+            <span className="text-xl font-extrabold text-brand-deep">{formatPKR(item.price)}</span>
+            <span className="text-sm text-steel"> {item.unit}</span>
+          </p>
+        )}
         <div className="mt-auto flex gap-2 pt-4">
-          <AddToQuoteButton itemKey={item.key} className="flex-1" />
+          <ContactServiceButton service={item.name} className="flex-1" />
           <Link
             href={item.href}
             aria-label={`${item.name} details`}

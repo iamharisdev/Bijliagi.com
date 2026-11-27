@@ -5,12 +5,11 @@ import { notFound } from "next/navigation";
 import { siteConfig } from "@/content/site";
 import { allItems, getCategory, getItem } from "@/content/services";
 import { highlights, scopeNote } from "@/content/general";
-import { formatPKR, whatsappUrl } from "@/lib/utils";
+import { formatPKR } from "@/lib/utils";
 import { breadcrumbSchema, faqSchema, itemSchema } from "@/lib/schema";
-import { Breadcrumbs, FaqList, IncludesList, JsonLd } from "@/components/ui";
+import { Breadcrumbs, buttonClass, ContactServiceButton, FaqList, IncludesList, JsonLd } from "@/components/ui";
 import { ItemCard } from "@/components/item-card";
-import { AddToQuoteWithQty } from "@/components/add-to-quote";
-import { CategoryGlyph, ClockIcon, DocIcon, PhoneIcon, ShieldIcon, WhatsAppIcon } from "@/components/icons";
+import { CategoryGlyph, ClockIcon, DocIcon, PhoneIcon, ShieldIcon } from "@/components/icons";
 
 const highlightIcons = [ClockIcon, DocIcon, ShieldIcon];
 
@@ -23,8 +22,12 @@ export async function generateMetadata({ params }: PageProps<"/services/[categor
   const item = getItem(category, slug);
   if (!item) return {};
   return {
-    title: `${item.name} in ${siteConfig.city}: ${item.from ? "from " : ""}${formatPKR(item.price)} ${item.unit}`,
-    description: `${item.summary} ${item.from ? "From " : ""}${formatPKR(item.price)} ${item.unit}. Book with ${siteConfig.name} on WhatsApp.`,
+    title: siteConfig.showPrices
+      ? `${item.name} in ${siteConfig.city}: ${item.from ? "from " : ""}${formatPKR(item.price)} ${item.unit}`
+      : `${item.name} in ${siteConfig.city}`,
+    description: siteConfig.showPrices
+      ? `${item.summary} ${item.from ? "From " : ""}${formatPKR(item.price)} ${item.unit}. Book with ${siteConfig.name} on WhatsApp.`
+      : `${item.summary} Contact ${siteConfig.name} on WhatsApp.`,
     alternates: { canonical: item.href },
     openGraph: {
       url: item.href,
@@ -47,7 +50,6 @@ export default async function ItemPage({ params }: PageProps<"/services/[categor
     { name: category.name, path: `/services/${category.slug}` },
     { name: item.name, path: item.href },
   ];
-  const waMessage = `Assalam o Alaikum ${siteConfig.name}, I need: ${item.name} (${item.from ? "from " : ""}${formatPKR(item.price)} ${item.unit}). Please share details.`;
 
   return (
     <>
@@ -82,22 +84,22 @@ export default async function ItemPage({ params }: PageProps<"/services/[categor
             {category.name}
           </Link>
           <h1 className="mt-2 text-5xl md:text-6xl">{item.name}</h1>
-          <p className="mt-5 inline-flex items-baseline gap-2 rounded-2xl bg-brand-soft px-5 py-3 tabular-nums">
-            {item.from && <span className="text-steel">from</span>}
-            <span className="condensed text-5xl font-extrabold text-brand-deep">{formatPKR(item.price)}</span>
-            <span className="text-lg text-steel">{item.unit}</span>
-          </p>
+          {siteConfig.showPrices && (
+            <p className="mt-5 inline-flex items-baseline gap-2 rounded-2xl bg-brand-soft px-5 py-3 tabular-nums">
+              {item.from && <span className="text-steel">from</span>}
+              <span className="condensed text-5xl font-extrabold text-brand-deep">{formatPKR(item.price)}</span>
+              <span className="text-lg text-steel">{item.unit}</span>
+            </p>
+          )}
           {item.note && <p className="mt-2 text-sm text-steel">{item.note}</p>}
           <p className="mt-6 max-w-lg text-lg">{item.summary}</p>
 
-          <div className="mt-8 space-y-5 rounded-3xl border border-line bg-white p-5 shadow-card md:p-6">
-            <AddToQuoteWithQty itemKey={item.key} name={item.name} unit={item.unit} />
-            <div className="flex flex-wrap gap-x-6 gap-y-3 border-t border-line pt-5">
-              <a href={whatsappUrl(waMessage)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 font-semibold text-wa hover:underline">
-                <WhatsAppIcon className="size-5" />
-                Ask on WhatsApp
-              </a>
-              <a href={`tel:${siteConfig.phoneE164}`} className="inline-flex items-center gap-2 font-semibold text-ink hover:text-brand">
+          <div className="mt-8 rounded-3xl border border-line bg-white p-5 shadow-card md:p-6">
+            <p className="font-semibold">Need this done? Talk to us directly.</p>
+            <p className="mt-1 text-sm text-steel">Tell us your area and a little about the job. We reply with the price and a visit time.</p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              <ContactServiceButton service={item.name} size="lg" label="Contact us on WhatsApp" className="flex-1 sm:flex-none" />
+              <a href={`tel:${siteConfig.phoneE164}`} className={buttonClass("outline", "h-13 py-0")}>
                 <PhoneIcon className="size-4" />
                 {siteConfig.phoneDisplay}
               </a>
@@ -118,7 +120,9 @@ export default async function ItemPage({ params }: PageProps<"/services/[categor
               );
             })}
           </ul>
-          <p className="mt-6 text-sm text-steel">Labour rate. Final quote confirmed after the site is checked.</p>
+          <p className="mt-6 text-sm text-steel">
+            {siteConfig.showPrices ? "Labour rate. Final quote confirmed after the site is checked." : "The price is agreed with you before any work starts."}
+          </p>
         </div>
       </div>
 

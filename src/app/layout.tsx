@@ -2,19 +2,18 @@ import type { Metadata, Viewport } from "next";
 import "@fontsource-variable/archivo/wdth.css";
 import "./globals.css";
 import { siteConfig } from "@/content/site";
-import { catalog, categories } from "@/content/services";
+import { categories } from "@/content/services";
 import { businessSchema } from "@/lib/schema";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { JsonLd, MobileActionBar } from "@/components/ui";
-import { QuoteProvider } from "@/components/quote-provider";
 import { ScrollReveal } from "@/components/motion";
 import { Suspense } from "react";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteConfig.url),
   title: {
-    default: `${siteConfig.name} | Electricians in ${siteConfig.city} with clear rates`,
+    default: `${siteConfig.name} | Electricians in ${siteConfig.city}, 35+ years experience`,
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
@@ -48,12 +47,10 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         >
           Skip to content
         </a>
-        <QuoteProvider catalog={catalog}>
-          <Header />
-          <main id="main">{children}</main>
-          <Footer />
-          <MobileActionBar />
-        </QuoteProvider>
+        <Header />
+        <main id="main">{children}</main>
+        <Footer />
+        <MobileActionBar />
         <Suspense fallback={null}>
           <ScrollReveal />
         </Suspense>

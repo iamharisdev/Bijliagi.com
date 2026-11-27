@@ -3,12 +3,22 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import type { CatalogEntry } from "@/content/services";
 import { formatPKR } from "@/lib/utils";
 import { Modal } from "@/components/modal";
-import { useQuote } from "@/components/quote-provider";
+import { ArrowRightIcon } from "@/components/icons";
 
-export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => void }) {
-  const { catalog } = useQuote();
+export function SearchDialog({
+  open,
+  onClose,
+  catalog,
+  showPrices,
+}: {
+  open: boolean;
+  onClose: () => void;
+  catalog: CatalogEntry[];
+  showPrices: boolean;
+}) {
   const [query, setQuery] = useState("");
 
   const results = useMemo(() => {
@@ -60,13 +70,17 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
                     <span className="block truncate font-semibold">{e.name}</span>
                     <span className="block truncate text-sm text-steel">{e.categoryName}</span>
                   </span>
-                  <span className="text-right text-sm whitespace-nowrap tabular-nums">
-                    <span className="block font-bold">
-                      {e.from && "from "}
-                      {formatPKR(e.price)}
+                  {showPrices ? (
+                    <span className="text-right text-sm whitespace-nowrap tabular-nums">
+                      <span className="block font-bold">
+                        {e.from && "from "}
+                        {formatPKR(e.price)}
+                      </span>
+                      <span className="text-steel">{e.unit}</span>
                     </span>
-                    <span className="text-steel">{e.unit}</span>
-                  </span>
+                  ) : (
+                    <ArrowRightIcon className="size-4 shrink-0 text-steel" />
+                  )}
                 </Link>
               </li>
             ))}

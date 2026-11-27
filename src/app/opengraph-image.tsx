@@ -29,7 +29,7 @@ export default function OpengraphImage() {
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ display: "flex", fontSize: 64, fontWeight: 800, lineHeight: 1.05, maxWidth: 980 }}>
-            {`Electricians in ${siteConfig.city} with clear rates and written contracts`}
+            {`Electricians in ${siteConfig.city}. 35+ years of experience, now online.`}
           </div>
           <div style={{ marginTop: 28, fontSize: 30, color: "#ffc72c" }}>
             Wiring · Faults & DBs · AC · UPS · Solar · CCTV

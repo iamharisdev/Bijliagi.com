@@ -10,7 +10,7 @@ export const hero = {
   /** The title reads: titleStart, then the rotating words on the next line. */
   titleStart: "Expert electricians",
   rotatingWords: ["for wiring", "for fault repair", "for AC fitting", "for solar", "for UPS & generator", "for CCTV"],
-  body: "Trained electricians for everything from the meter onwards: wiring, DBs, faults, lighting, AC, UPS, solar and CCTV. See the rates first, add what you need, and send one quote request on WhatsApp.",
+  body: "Trained electricians for everything from the meter onwards: wiring, DBs, faults, lighting, AC, UPS, solar and CCTV. Tell us what you need on WhatsApp and we send a trained technician.",
   /** Background video for the banner. Replace with your own clip (keep it short and silent). */
   video: "/videos/hero-electrician.mp4",
   poster: "/images/videos/hero-electrician.jpg",
@@ -25,7 +25,7 @@ export const highlights = [
 
 /** Count-up stats bar under the banner. PLACEHOLDERS: replace with your real numbers. */
 export const stats = [
-  { value: 500, suffix: "+", label: "Jobs completed" },
+  { value: 5000, suffix: "+", label: "Jobs completed" },
   { value: 15, suffix: "", label: "Trained technicians" },
   { value: 35, suffix: "+ yrs", label: "Years of experience" },
   { value: siteConfig.serviceAreas.length, suffix: "", label: "Areas covered" },
@@ -104,13 +104,39 @@ export const story = {
   imageAlt: "Bijliagi team on a building site",
 } as const;
 
+/** About page highlight: 35 years of experience, now online, live videos coming. */
+export const journey = {
+  eyebrow: "Our journey",
+  title: "35 years on site. Now online.",
+  body: "We have been doing electrical work for more than 35 years, long before anyone booked an electrician on the internet. Customers found us by word of mouth and kept coming back. The way people find and book services has changed a lot since then, so we are moving with the times: Bijliagi.com brings the same experienced team online, and easy to reach on WhatsApp.",
+  steps: [
+    {
+      label: "Then",
+      title: "Trusted by word of mouth",
+      body: "35 years of homes, shops and buildings wired and repaired. Trust earned one job at a time.",
+    },
+    {
+      label: "Now",
+      title: "Online and one message away",
+      body: "Message us on WhatsApp from your phone, get a quick reply, and the same experienced team at your door.",
+    },
+    {
+      label: "Next",
+      title: "Our work, live on video",
+      body: "Step by step we are adding real videos from our job sites, so you can see the quality of our work before you call.",
+      soon: true,
+    },
+  ],
+  note: "Our experience is 35 years old, our website is new. Thank you for bearing with us while it grows.",
+} as const;
+
 export const processSteps = [
   {
-    title: "Pick services and check rates",
-    body: "Add what you need to your quote list. Every service shows its rate per point, unit or job.",
+    title: "Choose your service",
+    body: "Browse our services and tap Contact us on the one you need.",
   },
   {
-    title: "Send your quote request",
+    title: "Book a visit on WhatsApp",
     body: "Send the list on WhatsApp, or call us. Photos of the site help us quote faster.",
   },
   {
@@ -125,8 +151,8 @@ export const processSteps = [
 
 export const commitments = [
   {
-    title: "Rate first, work second",
-    body: "You see the rate before we start. Anything extra is agreed with you first, never added to the bill later.",
+    title: "Price first, work second",
+    body: "You know the price before we start. Anything extra is agreed with you first, never added to the bill later.",
   },
   {
     title: "Written contract",
@@ -179,9 +205,9 @@ export const generalFaqs = [
     answer: "We currently cover Lahore. More cities are coming. Larger contract jobs elsewhere can be discussed.",
   },
   {
-    question: "Are the rates on the website final?",
+    question: "How do I get a price?",
     answer:
-      "Listed rates are our standard labour rates. The final quote depends on the site and scope, and is confirmed before work starts.",
+      "Message us on WhatsApp with the work you need and your area; photos help. We reply with a price, after a site visit if needed, and it is agreed with you before any work starts.",
   },
   {
     question: "Do you supply wire and material?",
@@ -189,9 +215,9 @@ export const generalFaqs = [
       "Yes. We can supply wire, breakers, fittings, solar equipment and cameras at market price, or use material you buy. It is listed separately in the quote.",
   },
   {
-    question: "How does the quote list work?",
+    question: "How do I book?",
     answer:
-      "Add services to your quote list, set quantities, and send it to us on WhatsApp in one message. Nothing is booked until we confirm.",
+      "Tap Contact us on the service you need. WhatsApp opens with the service name filled in; add your area and a few words about the job. We reply with the price and a visit time.",
   },
   // Plumbing FAQ: hidden while plumbing services are hidden. Remove the "// " to show it again.
   // {

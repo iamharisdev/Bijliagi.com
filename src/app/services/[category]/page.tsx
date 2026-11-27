@@ -7,7 +7,7 @@ import { allItems, categories, getCategory, headlineItem } from "@/content/servi
 import { highlights, scopeNote } from "@/content/general";
 import { formatPKR, whatsappUrl } from "@/lib/utils";
 import { breadcrumbSchema, categorySchema, faqSchema } from "@/lib/schema";
-import { buttonClass, Eyebrow, FaqList, IncludesList, JsonLd, PageHero, RateTable } from "@/components/ui";
+import { buttonClass, ContactServiceButton, Eyebrow, FaqList, IncludesList, JsonLd, PageHero, RateTable } from "@/components/ui";
 import { ItemCard } from "@/components/item-card";
 import { InquiryForm } from "@/components/inquiry-form";
 import { ArrowRightIcon, CategoryGlyph, CheckIcon, WhatsAppIcon } from "@/components/icons";
@@ -24,7 +24,9 @@ export async function generateMetadata({ params }: PageProps<"/services/[categor
   const first = headlineItem(category);
   return {
     title: `${category.name} in ${siteConfig.city}`,
-    description: `${category.summary} ${first.name}: ${formatPKR(first.price)} ${first.unit}.`,
+    description: siteConfig.showPrices
+      ? `${category.summary} ${first.name}: ${formatPKR(first.price)} ${first.unit}.`
+      : `${category.summary} Contact ${siteConfig.name} on WhatsApp.`,
     alternates: { canonical: path },
     openGraph: {
       url: path,
@@ -52,7 +54,7 @@ export default async function CategoryPage({ params }: PageProps<"/services/[cat
     <>
       <PageHero
         crumbs={crumbs}
-        eyebrow={`${items.length} services · from ${formatPKR(from)}`}
+        eyebrow={siteConfig.showPrices ? `${items.length} services · from ${formatPKR(from)}` : `${items.length} services`}
         title={
           <>
             {category.name} <span className="text-brand-bright">in {siteConfig.city}</span>
@@ -64,7 +66,7 @@ export default async function CategoryPage({ params }: PageProps<"/services/[cat
       >
         <div className="mt-8 flex flex-wrap gap-3">
           <a href="#services" className={buttonClass("primary")}>
-            See services &amp; rates
+            See services
           </a>
           <a
             href={whatsappUrl(`Assalam o Alaikum ${siteConfig.name}, I need ${category.name.toLowerCase()}.`)}
@@ -104,13 +106,25 @@ export default async function CategoryPage({ params }: PageProps<"/services/[cat
 
       <section className="border-y border-line bg-white py-16 md:py-20">
         <div className="wrap grid gap-12 lg:grid-cols-[1.4fr_1fr]">
-          <div data-reveal>
-            <h2 id="rates" className="text-4xl">Rate list</h2>
-            <div className="mt-6">
-              <RateTable rates={category.items} caption={`${category.name} rates`} />
+          {siteConfig.showPrices ? (
+            <div data-reveal>
+              <h2 id="rates" className="text-4xl">Rate list</h2>
+              <div className="mt-6">
+                <RateTable rates={category.items} caption={`${category.name} rates`} />
+              </div>
+              <p className="mt-4 text-sm text-steel">Labour rates. Final quote confirmed after the site is checked. {scopeNote.body}</p>
             </div>
-            <p className="mt-4 text-sm text-steel">Labour rates. Final quote confirmed after the site is checked. {scopeNote.body}</p>
-          </div>
+          ) : (
+            <div data-reveal>
+              <h2 id="contact-us" className="text-4xl">Tell us about your job</h2>
+              <p className="mt-4 max-w-xl text-lg text-steel">
+                Send us a message on WhatsApp with what you need and your area. Photos help. We reply with the price and a
+                visit time, and the price is agreed before any work starts.
+              </p>
+              <ContactServiceButton service={category.name} size="lg" label="Contact us on WhatsApp" className="mt-8" />
+              <p className="mt-6 text-sm text-steel">{scopeNote.body}</p>
+            </div>
+          )}
           <div data-reveal>
             <div className="relative overflow-hidden rounded-3xl">
               <Image

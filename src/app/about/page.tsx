@@ -2,15 +2,17 @@ import type { Metadata } from "next";
 import Image from "next/image";
 import { siteConfig } from "@/content/site";
 import { categories } from "@/content/services";
-import { commitments, stats, story } from "@/content/general";
+import { commitments, journey, stats, story } from "@/content/general";
 import { breadcrumbSchema } from "@/lib/schema";
-import { ButtonLink, JsonLd, PageHero, SectionHeading } from "@/components/ui";
+import { ButtonLink, Eyebrow, JsonLd, PageHero, SectionHeading } from "@/components/ui";
 import { CountUp } from "@/components/motion";
-import { CategoryGlyph, CheckIcon } from "@/components/icons";
+import { BoltIcon, CategoryGlyph, CheckIcon, ClockIcon, PhoneIcon, PlayIcon } from "@/components/icons";
+
+const journeyIcons = [ClockIcon, PhoneIcon, PlayIcon];
 
 export const metadata: Metadata = {
   title: "About us",
-  description: `Why ${siteConfig.name} works with clear rates, written contracts and a trained in-house team in ${siteConfig.city}.`,
+  description: `Why ${siteConfig.name} works with agreed prices, written contracts and a trained in-house team in ${siteConfig.city}.`,
   alternates: { canonical: "/about" },
   openGraph: { url: "/about" },
 };
@@ -36,6 +38,67 @@ export default function AboutPage() {
             </div>
           ))}
         </dl>
+      </section>
+
+      {/* Highlight: 35 years of experience, now online */}
+      <section aria-labelledby="journey-title" className="wrap pt-20">
+        <div className="relative isolate overflow-hidden rounded-3xl border border-brand/20 bg-white p-7 shadow-lift md:p-12" data-reveal>
+          <div className="circuit-dark absolute inset-0 -z-10" aria-hidden="true" />
+          <span
+            aria-hidden="true"
+            className="condensed pointer-events-none absolute -top-10 -right-4 -z-10 text-[16rem] leading-none font-extrabold text-brand/[0.06] select-none md:text-[22rem]"
+          >
+            35
+          </span>
+          <div className="grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:gap-16">
+            <div>
+              <Eyebrow>{journey.eyebrow}</Eyebrow>
+              <h2 id="journey-title" className="mt-3 text-4xl md:text-[3.25rem]">
+                {journey.title}
+              </h2>
+              <p className="mt-5 text-lg text-steel">{journey.body}</p>
+              <p className="mt-8 flex gap-3 rounded-2xl border border-spark/60 bg-spark-soft px-5 py-4 font-semibold text-ink">
+                <BoltIcon className="mt-0.5 size-5 shrink-0 text-brand-deep" />
+                {journey.note}
+              </p>
+            </div>
+
+            <ol className="relative space-y-4">
+              <span aria-hidden="true" className="absolute top-8 bottom-8 left-7 w-0.5 bg-gradient-to-b from-brand-deep via-brand to-spark" />
+              {journey.steps.map((step, i) => {
+                const Icon = journeyIcons[i % journeyIcons.length];
+                const soon = "soon" in step && step.soon;
+                return (
+                  <li
+                    key={step.label}
+                    className="relative flex gap-5 rounded-2xl border border-line bg-white/90 p-5 backdrop-blur transition-all hover:-translate-y-0.5 hover:border-brand/40 hover:shadow-card"
+                    data-reveal
+                    style={{ "--reveal-i": i } as React.CSSProperties}
+                  >
+                    <span
+                      className={`relative flex size-14 shrink-0 items-center justify-center rounded-2xl shadow-[0_12px_24px_-10px_rgb(22_103_217/0.9)] ${soon ? "bg-spark text-ink" : "bg-brand-gradient text-white"}`}
+                    >
+                      <Icon className="size-6" />
+                    </span>
+                    <div>
+                      <p className="flex items-center gap-2 text-xs font-bold tracking-[0.14em] text-brand uppercase">
+                        {step.label}
+                        {soon && (
+                          <span className="flex items-center gap-1.5 rounded-full bg-live/10 px-2 py-0.5 text-[0.65rem] tracking-normal text-live normal-case">
+                            <span className="live-dot size-1.5 rounded-full bg-live" />
+                            Coming soon
+                          </span>
+                        )}
+                      </p>
+                      <h3 className="mt-1 text-2xl">{step.title}</h3>
+                      <p className="mt-1 text-steel">{step.body}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ol>
+          </div>
+        </div>
       </section>
 
       <section className="wrap grid items-center gap-14 py-24 lg:grid-cols-2">

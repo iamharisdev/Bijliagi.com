@@ -14,6 +14,8 @@
  * All prices are PKR labour rates. Values below are PLACEHOLDERS: replace with your real rates.
  */
 
+import { siteConfig } from "@/content/site";
+
 export type Faq = { question: string; answer: string };
 
 export type ServiceItem = {
@@ -79,9 +81,9 @@ export const categories: Category[] = [
         answer: "One switch, socket or light outlet with its wiring back to the board is one point.",
       },
       {
-        question: "Do rates include wire and material?",
+        question: "Does the price include wire and material?",
         answer:
-          "Rates are for labour. We can supply material at market price, or use material you buy. This is written into the contract.",
+          "Our price is for labour. We can supply material at market price, or use material you buy. This is written into the contract.",
       },
     ],
     items: [
@@ -243,7 +245,7 @@ export const categories: Category[] = [
     faqs: [
       {
         question: "Is there a minimum charge?",
-        answer: "Yes, small jobs have a minimum visit charge of Rs 1,000.",
+        answer: "Yes, small jobs have a minimum visit charge. We tell you the amount on WhatsApp before we come.",
       },
     ],
     items: [
@@ -747,14 +749,14 @@ export function headlineItem(category: Category): ServiceItem {
   return category.items[0];
 }
 
-/** Slim data sent to the browser for search and the quote list. */
+/** Slim data sent to the browser for search and the service request. */
 export type CatalogEntry = Pick<
   ItemWithCategory,
-  "key" | "name" | "unit" | "price" | "from" | "image" | "imageAlt" | "href" | "categoryName" | "categorySlug"
+  "key" | "name" | "unit" | "price" | "from" | "image" | "imageAlt" | "href" | "categoryName" | "categorySlug" | "categoryIcon"
 >;
 
 export const catalog: CatalogEntry[] = allItems.map(
-  ({ key, name, unit, price, from, image, imageAlt, href, categoryName, categorySlug }) => ({
+  ({ key, name, unit, price, from, image, imageAlt, href, categoryName, categorySlug, categoryIcon }) => ({
     key,
     name,
     unit,
@@ -765,5 +767,16 @@ export const catalog: CatalogEntry[] = allItems.map(
     href,
     categoryName,
     categorySlug,
+    categoryIcon,
   }),
 );
+
+/** Catalog sent to the browser: prices are left out entirely while siteConfig.showPrices is off. */
+export const publicCatalog: CatalogEntry[] = siteConfig.showPrices
+  ? catalog
+  : catalog.map((e) => ({ ...e, price: 0, from: undefined, unit: "" }));
+
+/** Items passed to browser components (e.g. the filter grid): prices removed while showPrices is off. */
+export function forBrowser<T extends { price: number; unit: string; from?: boolean }>(items: T[]): T[] {
+  return siteConfig.showPrices ? items : items.map((i) => ({ ...i, price: 0, unit: "", from: undefined }));
+}

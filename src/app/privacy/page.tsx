@@ -13,8 +13,8 @@ export default function PrivacyPage() {
     <LegalPage title="Privacy policy" path="/privacy" updated="26 November 2026">
       <p>This page explains what information {siteConfig.name} collects and how we use it.</p>
       <h2>What we collect</h2>
-      <p>This website has no accounts and stores no forms on our servers. When you send a quote request, it opens WhatsApp with your message; we receive only what you send there (for example your name, number, area and the services you need).</p>
-      <p>Your quote list is saved in your own browser so it stays when you come back. You can clear it at any time from the quote list.</p>
+      <p>This website has no accounts. When you contact us about a service, it opens WhatsApp with your message; we receive only what you send there (for example your name, number, area and the work you need).</p>
+      <p>If you leave a review through the link we send you, we store the name, area, service, rating and review you enter, and show them on this website. We do not store your phone number with reviews. Ask us on WhatsApp to change or remove your review at any time.</p>
       <h2>How we use it</h2>
       <ul>
         <li>To reply to your request and prepare a quote</li>

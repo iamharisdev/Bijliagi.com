@@ -23,6 +23,8 @@ Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` to the live d
 | Brand colours | `@theme` block at the top of `src/app/globals.css` |
 | Photos | `public/images/` (replace a file with the same name) |
 
+**Show or hide prices:** `showPrices` in `src/content/site.ts`. It is `false` now: no prices anywhere on the site (not even in the page data), and every service has a green "Contact us" button that opens WhatsApp with the service name. Set it to `true` to show the rates again.
+
 **Rates:** change `price`. Set `from: true` to show "from Rs X". The **first rate** of each service is the headline rate on the home page and in Google descriptions. After updating rates, also update `RATES_LAST_UPDATED`.
 
 **Photos:** replace `public/images/hero.jpg` and the files in `public/images/services/` with real JPGs, ideally 1200×800 (3:2). Keep the same file names, or change `image.src` in `services.ts`. Update the `alt` text too, since it helps SEO.

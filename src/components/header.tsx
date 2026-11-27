@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { siteConfig } from "@/content/site";
-import { categories } from "@/content/services";
+import { categories, publicCatalog } from "@/content/services";
 import { whatsappUrl } from "@/lib/utils";
 import { ArrowRightIcon, CategoryGlyph, ChevronDownIcon, ClockIcon, PhoneIcon, PinIcon, WhatsAppIcon } from "@/components/icons";
 import { HeaderActions } from "@/components/header-actions";
@@ -117,8 +117,8 @@ export function Header() {
                           className="group/all mt-2 flex items-center justify-between rounded-xl bg-ink px-4 py-3 text-sm text-white hover:bg-brand-deep"
                         >
                           <span>
-                            <strong>All services &amp; rate list</strong>
-                            <span className="ml-2 text-white/60">Add to your quote and send on WhatsApp</span>
+                            <strong>All services</strong>
+                            <span className="ml-2 text-white/60">Contact us on WhatsApp about any service</span>
                           </span>
                           <ArrowRightIcon className="size-4 transition-transform group-hover/all:translate-x-1" />
                         </Link>
@@ -137,7 +137,7 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-1">
-            <HeaderActions />
+            <HeaderActions catalog={publicCatalog} showPrices={siteConfig.showPrices} />
             <a
               href={whatsappUrl(defaultWaMessage)}
               target="_blank"

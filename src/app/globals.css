@@ -107,7 +107,7 @@
   }
 }
 
-/* Lock page scroll while a dialog (search, quote list, video) is open */
+/* Lock page scroll while a dialog (search, booking, menu) is open */
 html:has(dialog[open]) {
   overflow: hidden;
 }
