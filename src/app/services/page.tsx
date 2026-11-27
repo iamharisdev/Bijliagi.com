@@ -3,7 +3,7 @@ import Link from "next/link";
 import { siteConfig } from "@/content/site";
 import { allItems, electricalCategories, forBrowser, plumbingCategories } from "@/content/services";
 import { scopeNote } from "@/content/general";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 import { Eyebrow, JsonLd, PageHero } from "@/components/ui";
 import { ItemCard } from "@/components/item-card";
 import { FilterableGrid } from "@/components/filterable-grid";
@@ -78,6 +78,7 @@ export default function ServicesPage() {
         </div>
       </div>
       <JsonLd data={breadcrumbSchema(crumbs)} />
+      <JsonLd data={webPageSchema("CollectionPage", "/services", "Our services", `Electrical services by ${siteConfig.name} in ${siteConfig.city}.`)} />
     </>
   );
 }

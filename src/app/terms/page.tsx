@@ -4,6 +4,7 @@ import { LegalPage } from "@/components/legal-page";
 
 export const metadata: Metadata = {
   title: "Terms of service",
+  description: `Terms for electrical work by ${siteConfig.name} in ${siteConfig.city}: prices, contracts, materials and guarantee.`,
   alternates: { canonical: "/terms" },
 };
 

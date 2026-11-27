@@ -3,7 +3,7 @@ import "@fontsource-variable/archivo/wdth.css";
 import "./globals.css";
 import { siteConfig } from "@/content/site";
 import { categories } from "@/content/services";
-import { businessSchema } from "@/lib/schema";
+import { businessSchema, websiteSchema } from "@/lib/schema";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { JsonLd, MobileActionBar } from "@/components/ui";
@@ -18,6 +18,23 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   applicationName: siteConfig.name,
+  keywords: [
+    "electrician in Lahore",
+    "electrician near me",
+    "house wiring Lahore",
+    "electrical services Lahore",
+    "AC installation Lahore",
+    "UPS wiring",
+    "generator changeover",
+    "solar installation Lahore",
+    "CCTV installation Lahore",
+    "fault finding",
+    "bijli ka mistri",
+    "Bijliagi",
+  ],
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
   alternates: { canonical: "/" },
   openGraph: {
     type: "website",
@@ -26,7 +43,21 @@ export const metadata: Metadata = {
     url: "/",
   },
   twitter: { card: "summary_large_image" },
-  robots: { index: true, follow: true },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
+  },
+  // Search Console / Bing Webmaster verification: paste the codes in your host's env vars (see README).
+  verification: {
+    ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION ? { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION } : {}),
+    ...(process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION ? { other: { "msvalidate.01": process.env.NEXT_PUBLIC_BING_SITE_VERIFICATION } } : {}),
+  },
+  // Local SEO hints for regional search engines.
+  other: {
+    "geo.region": "PK-PB",
+    "geo.placename": siteConfig.city,
+  },
   formatDetection: { telephone: false },
   category: "Home services",
 };
@@ -55,6 +86,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <ScrollReveal />
         </Suspense>
         <JsonLd data={businessSchema(categories)} />
+        <JsonLd data={websiteSchema()} />
       </body>
     </html>
   );

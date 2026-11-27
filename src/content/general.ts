@@ -201,6 +201,25 @@ export const scopeNote = {
 
 export const generalFaqs = [
   {
+    question: "How much does an electrician cost in Lahore?",
+    answer:
+      "It depends on the work, the size of the job and your area. Send us the work you need on WhatsApp (photos help) and we reply with a price. The price is agreed with you before any work starts, and small jobs have a minimum visit charge.",
+  },
+  {
+    question: "Can you come quickly for a fault, tripping or no power?",
+    answer:
+      "Yes. For faults like a tripping breaker, sparking socket or part of the house without power, we aim to visit within 24 hours across our Lahore service areas, during working hours (Mon–Sat, 9 am – 8 pm).",
+  },
+  {
+    question: "Are your electricians trained and experienced?",
+    answer:
+      "Yes. We have more than 35 years in electrical work and a trained in-house team, not random call-outs. We earth every circuit, use the correct wire gauge and rated breakers, and cut the power before touching a circuit.",
+  },
+  {
+    question: "Do you give a guarantee on your work?",
+    answer: "Yes. If something we fitted fails because of our workmanship, we come back and fix it.",
+  },
+  {
     question: "Which cities do you cover?",
     answer: "We currently cover Lahore. More cities are coming. Larger contract jobs elsewhere can be discussed.",
   },

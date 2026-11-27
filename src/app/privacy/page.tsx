@@ -4,6 +4,7 @@ import { LegalPage } from "@/components/legal-page";
 
 export const metadata: Metadata = {
   title: "Privacy policy",
+  description: `How ${siteConfig.name} uses the details you send on WhatsApp and in reviews.`,
   alternates: { canonical: "/privacy" },
 };
 

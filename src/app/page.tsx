@@ -369,7 +369,7 @@ export default function HomePage() {
             id="areas"
             eyebrow="Service areas"
             title={`Areas we cover in ${siteConfig.city}`}
-            intro="Not on the list? Message us. We regularly take jobs nearby, and more cities are coming soon."
+            intro={`Looking for an electrician near you in ${siteConfig.city}? Our team covers these areas, usually within 24 hours. Not on the list? Message us, we regularly take jobs nearby.`}
           />
           <ul className="flex flex-wrap gap-2.5" data-reveal>
             {siteConfig.serviceAreas.map((area) => (
@@ -400,7 +400,7 @@ export default function HomePage() {
             <Eyebrow>FAQ</Eyebrow>
             <h2 className="mt-3 text-4xl">Common questions</h2>
             <div className="mt-8">
-              <FaqList faqs={generalFaqs} />
+              <FaqList faqs={generalFaqs.slice(0, 6)} />
             </div>
             <TextLink href="/faq" className="mt-6">
               All questions
@@ -431,7 +431,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <JsonLd data={faqSchema(generalFaqs)} />
+      <JsonLd data={faqSchema(generalFaqs.slice(0, 6))} />
     </>
   );
 }

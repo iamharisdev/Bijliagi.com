@@ -31,15 +31,18 @@ Copy `.env.example` to `.env.local` and set `NEXT_PUBLIC_SITE_URL` to the live d
 
 **Adding a service:** add an object to the `services` array. The page, sitemap, navigation, form dropdown and schema update automatically.
 
-## SEO included
+## SEO and GEO (AI search) included
 
-- Per-page titles, descriptions, canonical URLs, Open Graph and Twitter cards
-- Generated Open Graph image (`src/app/opengraph-image.tsx`)
-- `sitemap.xml`, `robots.txt`, web manifest
-- JSON-LD: `Electrician` (local business with areas served and hours), `Service` with PKR offers, `FAQPage`, `BreadcrumbList`
-- Semantic HTML, one `h1` per page, statically generated pages, `next/image`
+- Per-page titles, descriptions (all unique, under 160 characters), canonical URLs, Open Graph and Twitter cards
+- `sitemap.xml` with every public page and its photos; `robots.txt` (private review pages blocked)
+- AI assistants (ChatGPT, Claude, Perplexity, Google AI, Apple) explicitly allowed in `robots.txt`
+- `/llms.txt`: plain-text summary of the business, services, areas, hours and FAQs for AI assistants, built from the content files
+- JSON-LD: `Electrician` + `LocalBusiness` (hours, WhatsApp contact point, areas, services catalog, Facebook), `WebSite`, `Service`, `FAQPage`, `AboutPage`, `ContactPage`, `CollectionPage`, `BreadcrumbList`, review rating
+- About page "Quick facts" block; FAQs written around real search questions
+- Search Console / Bing verification via env vars `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` and `NEXT_PUBLIC_BING_SITE_VERIFICATION`
+- After changing content, bump `lastUpdated` in `src/content/site.ts`
 
-After going live: add the site to Google Search Console, submit `/sitemap.xml`, and create a Google Business Profile that uses the same name, phone and area.
+Live domain: `https://www.bijliagi.com` (bijliagi.com redirects to it). Keep `NEXT_PUBLIC_SITE_URL` set to exactly this.
 
 ## Customer reviews (private link)
 

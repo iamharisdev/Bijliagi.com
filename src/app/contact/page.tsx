@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { siteConfig } from "@/content/site";
 import { categories } from "@/content/services";
 import { whatsappUrl } from "@/lib/utils";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 import { JsonLd, PageHero } from "@/components/ui";
 import { InquiryForm } from "@/components/inquiry-form";
 import { ClockIcon, PhoneIcon, PinIcon, WhatsAppIcon } from "@/components/icons";
@@ -73,6 +73,7 @@ export default function ContactPage() {
         </section>
       </div>
       <JsonLd data={breadcrumbSchema(crumbs)} />
+      <JsonLd data={webPageSchema("ContactPage", "/contact", `Contact ${siteConfig.name}`, `Call or WhatsApp ${siteConfig.phoneDisplay}. ${siteConfig.hours.label}.`)} />
     </>
   );
 }

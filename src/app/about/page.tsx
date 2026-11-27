@@ -3,8 +3,9 @@ import Image from "next/image";
 import { siteConfig } from "@/content/site";
 import { categories } from "@/content/services";
 import { commitments, journey, stats, story } from "@/content/general";
-import { breadcrumbSchema } from "@/lib/schema";
+import { breadcrumbSchema, webPageSchema } from "@/lib/schema";
 import { ButtonLink, Eyebrow, JsonLd, PageHero, SectionHeading } from "@/components/ui";
+import { whatsappUrl } from "@/lib/utils";
 import { CountUp } from "@/components/motion";
 import { BoltIcon, CategoryGlyph, CheckIcon, ClockIcon, PhoneIcon, PlayIcon } from "@/components/icons";
 
@@ -144,11 +145,42 @@ export default function AboutPage() {
         </div>
       </section>
 
+      {/* Quick facts: one clear summary for customers, Google and AI assistants */}
+      <section aria-labelledby="facts-title" className="wrap pt-20">
+        <SectionHeading id="facts-title" eyebrow="Quick facts" title={`${siteConfig.name} at a glance`} />
+        <dl className="mt-10 grid gap-px overflow-hidden rounded-3xl border border-line bg-line sm:grid-cols-2" data-reveal>
+          {[
+            ["Business", `${siteConfig.name}, professional electrical services`],
+            ["Experience", `${siteConfig.yearsExperience}+ years in electrical work, trained in-house team`],
+            ["Services", categories.map((c) => c.name).join(", ")],
+            ["Location", `${siteConfig.city}, ${siteConfig.region}, Pakistan`],
+            ["Areas covered", siteConfig.serviceAreas.join(", ")],
+            ["Working hours", siteConfig.hours.label],
+            ["Phone / WhatsApp", siteConfig.phoneDisplay],
+            ["How to book", "Message us on WhatsApp with the work and your area. The price is agreed before any work starts."],
+          ].map(([term, value]) => (
+            <div key={term} className="bg-white px-6 py-5">
+              <dt className="text-sm font-bold tracking-[0.08em] text-brand uppercase">{term}</dt>
+              <dd className="mt-1.5 text-ink">
+                {term === "Phone / WhatsApp" ? (
+                  <a href={whatsappUrl()} target="_blank" rel="noopener noreferrer" className="font-semibold hover:text-brand">
+                    {value}
+                  </a>
+                ) : (
+                  value
+                )}
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </section>
+
       <div className="wrap flex flex-wrap gap-3 py-16">
         <ButtonLink href="/services" arrow>Browse services</ButtonLink>
         <ButtonLink href="/contact" variant="outline">Contact us</ButtonLink>
       </div>
       <JsonLd data={breadcrumbSchema(crumbs)} />
+      <JsonLd data={webPageSchema("AboutPage", "/about", `About ${siteConfig.name}`, story.body)} />
     </>
   );
 }
